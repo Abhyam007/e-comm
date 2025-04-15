@@ -182,7 +182,7 @@ def show_cart():
                 st.write(f"Total: ${line_total}")
     st.write(f"### Grand Total: ${total}")
     if st.button("Checkout"):
-        st.success("Proceeding to payment gateway... (mock)")
+        st.success("Proceeding to payment gateway...")
 
 # -----------------------------
 # Admin Panel

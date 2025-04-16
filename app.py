@@ -149,7 +149,7 @@ def display_products(product_list):
         with col2:
             st.subheader(product["name"])
             st.write(product["description"])
-            st.write(f"*Price:* ${product['price']}")
+            st.write(f"Price: ${product['price']}")
             qty = st.number_input("Qty", 0, 5, 0, key=f"qty_{product['name']}")
         with col3:
             if st.button("Add to Cart 🛒", key=f"add_{product['name']}"):
@@ -252,13 +252,9 @@ with tabs[1]:
             st.subheader(dp["name"])
             st.write(dp["description"])
             st.markdown(
-                f"""
-                <span style="color:red; font-size:28px;">${dp['price']}</span>
-                <span style="text-decoration: line-through; color:gray; font-size:20px; margin-left: 10px;">
-                    ${dp['original_price']}
-                </span>
-                """,
-                unsafe_allow_html=False
+                f"<span style='color:red; font-size:28px;'>${dp['price']} "
+                f"${dp['original_price']}",
+                unsafe_allow_html=True
             )
             qty = st.number_input("Qty", 0, 5, 0, key=f"deal_{dp['name']}")
         with col3:
@@ -276,9 +272,9 @@ with tabs[2]:
 with tabs[3]:
     st.subheader("📞 Customer Support")
     st.markdown(""" 
-    - 📦 *Shipping:* Ships within 2-3 business days.
-    - 🔁 *Returns:* 30-day hassle-free returns.
-    - 📧 *Contact:* support@ecommerce.com
+    - 📦 Shipping: Ships within 2-3 business days.
+    - 🔁 Returns: 30-day hassle-free returns.
+    - 📧 Contact: support@ecommerce.com
     """)
 
 # Admin Tab

@@ -252,7 +252,7 @@ with tabs[1]:
             st.subheader(dp["name"])
             st.write(dp["description"])
             st.markdown(
-                f"<span style='color:red; font-size:18px;'>${dp['price']} "
+                f"<span style='color:red; font-size:28px;'>${dp['price']} "
                 f"${dp['original_price']}",
                 unsafe_allow_html=True
             )

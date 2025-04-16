@@ -258,7 +258,7 @@ with tabs[1]:
                     ${dp['original_price']}
                 </span>
                 """,
-                unsafe_allow_html=True
+                unsafe_allow_html=False
             )
             qty = st.number_input("Qty", 0, 5, 0, key=f"deal_{dp['name']}")
         with col3:

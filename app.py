@@ -252,8 +252,8 @@ with tabs[1]:
             st.subheader(dp["name"])
             st.write(dp["description"])
             st.markdown(
-                f"<span style='color:red; font-size:18px;'>${dp['price']}</span> "
-                f"<del>${dp['original_price']}</del>",
+                f"<span style='color:red; font-size:18px;'>${dp['price']} "
+                f"${dp['original_price']}",
                 unsafe_allow_html=True
             )
             qty = st.number_input("Qty", 0, 5, 0, key=f"deal_{dp['name']}")

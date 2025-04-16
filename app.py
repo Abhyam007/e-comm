@@ -58,35 +58,35 @@ products = [
     {
         "name": "Wireless Headphones",
         "price": 50,
-        "image": "assets/headphones.jpeg",
+        "image": "assets/headphones.jpeg",  # Update to .jpeg
         "description": "High-quality wireless headphones with noise cancellation.",
         "category": "Electronics"
     },
     {
         "name": "Smart Watch",
         "price": 120,
-        "image": "assets/smart_watch.jpeg",
+        "image": "assets/smart_watch.jpeg",  # Update to .jpeg
         "description": "Fitness tracking smart watch with long battery life.",
         "category": "Wearables"
     },
     {
         "name": "Laptop",
         "price": 800,
-        "image": "assets/laptop.jpeg",
+        "image": "assets/laptop.jpeg",  # Update to .jpeg
         "description": "Sleek laptop with powerful performance for work and play.",
         "category": "Computers"
     },
     {
         "name": "Bluetooth Speaker",
         "price": 40,
-        "image": "assets/speaker.jpeg",
+        "image": "assets/speaker.jpeg",  # Update to .jpeg
         "description": "Compact speaker with impressive sound quality.",
         "category": "Electronics"
     },
     {
         "name": "DSLR Camera",
         "price": 650,
-        "image": "assets/camera.jpeg",
+        "image": "assets/camera.jpeg",  # Update to .jpeg
         "description": "Professional DSLR camera for photography enthusiasts.",
         "category": "Electronics"
     }
@@ -97,14 +97,14 @@ deal_products = [
         "name": "Gaming Mouse",
         "price": 30,
         "original_price": 45,
-        "image": "assets/gaming.jpeg",
+        "image": "assets/gaming.jpeg",  # Update to .jpeg
         "description": "High DPI gaming mouse with colorful lighting.",
     },
     {
         "name": "Noise Cancelling Earbuds",
         "price": 25,
         "original_price": 50,
-        "image": "assets/buds.jpeg",
+        "image": "assets/buds.jpeg",  # Update to .jpeg
         "description": "In-ear buds with active noise cancelling technology.",
     }
 ]
@@ -146,7 +146,7 @@ def display_products(product_list):
         with col2:
             st.subheader(product["name"])
             st.write(product["description"])
-            st.write(f"**Price:** ${product['price']}")
+            st.write(f"*Price:* ${product['price']}")
             qty = st.number_input("Qty", 0, 5, 0, key=f"qty_{product['name']}")
         with col3:
             if st.button("Add to Cart 🛒", key=f"add_{product['name']}"):
@@ -177,7 +177,7 @@ def show_cart():
             with col1:
                 st.image(product["image"], width=80)
             with col2:
-                st.write(f"**{name}**")
+                st.write(f"{name}")
                 st.write(f"Quantity: {qty}")
                 st.write(f"Total: ${line_total}")
     st.write(f"### Grand Total: ${total}")
@@ -195,7 +195,7 @@ def admin_controls():
         desc = st.text_area("Description")
         price = st.number_input("Price", min_value=1, step=1)
         cat = st.selectbox("Category", ["Electronics", "Wearables", "Computers"])
-        img = st.text_input("Image Path (e.g., assets/your_image.jpeg)")
+        img = st.text_input("Image Path (e.g., assets/your_image.jpeg)")  # Change to .jpeg
         if st.button("Add Product"):
             new_prod = {
                 "name": name,
@@ -207,7 +207,7 @@ def admin_controls():
             products.append(new_prod)
             st.success(f"Product '{name}' added.")
 
-    with st.expander("✏️ Update Product Price"):
+    with st.expander("✏ Update Product Price"):
         prod_names = [p["name"] for p in products]
         selected = st.selectbox("Select Product", prod_names)
         new_price = st.number_input("New Price", min_value=1, step=1)
@@ -220,7 +220,7 @@ def admin_controls():
 # -----------------------------
 # Top Header and Logo
 # -----------------------------
-st.image("assets/logo.jpeg", width=800)
+st.image("assets/logo.jpeg", width=800)  # Updated to .jpeg
 st.markdown("<h1 style='text-align:center;'>Welcome to Our E-Commerce Store</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center;'>Shop the best products at the best prices!</p>", unsafe_allow_html=True)
 st.markdown("---")
@@ -232,7 +232,7 @@ tabs = st.tabs(["🏠 Home", "🔥 Today's Deal", "📦 Cart", "📞 Support"] +
 
 # Home Tab
 with tabs[0]:
-    st.subheader("🛍️ Products")
+    st.subheader("🛍 Products")
     if filtered_products:
         display_products(filtered_products)
     else:
@@ -248,25 +248,13 @@ with tabs[1]:
         with col2:
             st.subheader(dp["name"])
             st.write(dp["description"])
-
-            discount = 100 - int((dp["price"] / dp["original_price"]) * 100)
-            price_html = f"""
-                <div style='font-size:16px;'>
-                    <span style='color:red; font-weight:bold;'>${dp['price']}</span>
-                    <del style='color:gray;'>${dp['original_price']}</del>
-                    <span style='color:green; margin-left:10px;'>({discount}% OFF)</span>
-                </div>
-            """
-            st.markdown(price_html, unsafe_allow_html=True)
-
+            st.markdown(f"<span style='color:red;'>${dp['price']}</span> <del>${dp['original_price']}</del>", unsafe_allow_html=True)
             qty = st.number_input("Qty", 0, 5, 0, key=f"deal_{dp['name']}")
         with col3:
-            if st.button("Add to Cart 🛒", key=f"btn_deal_{dp['name']}"):
+            if st.button("Add to Cart", key=f"btn_deal_{dp['name']}"):
                 if qty > 0:
                     add_to_cart(dp["name"], qty)
                     st.success(f"Added {qty} x {dp['name']}")
-                else:
-                    st.warning("Please select a quantity greater than 0.")
         st.markdown("---")
 
 # Cart Tab
@@ -277,9 +265,9 @@ with tabs[2]:
 with tabs[3]:
     st.subheader("📞 Customer Support")
     st.markdown(""" 
-    - 📦 **Shipping:** Ships within 2-3 business days.
-    - 🔁 **Returns:** 30-day hassle-free returns.
-    - 📧 **Contact:** support@ecommerce.com
+    - 📦 *Shipping:* Ships within 2-3 business days.
+    - 🔁 *Returns:* 30-day hassle-free returns.
+    - 📧 *Contact:* support@ecommerce.com
     """)
 
 # Admin Tab
@@ -289,4 +277,4 @@ if st.session_state.user_role == "admin":
 
 # Footer
 st.markdown("---")
-st.markdown("<p style='text-align:center;'>© 2025 E-Commerce Demo. Built with ❤️ using Streamlit.</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center;'>© 2025 E-Commerce Demo. Built with ❤ using Streamlit.</p>", unsafe_allow_html=True)

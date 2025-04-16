@@ -254,8 +254,7 @@ with tabs[1]:
     st.markdown(
         f"<span style='color:red; font-size:28px;'>${dp['price']}</span> "
         f"<span style='text-decoration: line-through; color:gray;'>${dp['original_price']}</span>",
-        unsafe_allow_html=True
-    )
+        unsafe_allow_html=True)
             qty = st.number_input("Qty", 0, 5, 0, key=f"deal_{dp['name']}")
         with col3:
             if st.button("Add to Cart", key=f"btn_deal_{dp['name']}"):

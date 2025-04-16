@@ -29,22 +29,20 @@ users = {
 }
 
 # -----------------------------
-# Centered Login System
+# Login System
 # -----------------------------
 if not st.session_state.logged_in:
-    st.markdown("<h2 style='text-align:center;'>Login to Continue</h2>", unsafe_allow_html=True)
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        username = st.text_input("Username")
-        password = st.text_input("Password", type="password")
-        if st.button("Login"):
-            if username in users and users[username]["password"] == password:
-                st.session_state.logged_in = True
-                st.session_state.user_role = users[username]["role"]
-                st.success(f"Logged in as {username} ({st.session_state.user_role})")
-                st.rerun()
-            else:
-                st.error("Invalid credentials")
+    st.sidebar.header("Login")
+    username = st.sidebar.text_input("Username")
+    password = st.sidebar.text_input("Password", type="password")
+    if st.sidebar.button("Login"):
+        if username in users and users[username]["password"] == password:
+            st.session_state.logged_in = True
+            st.session_state.user_role = users[username]["role"]
+            st.sidebar.success(f"Logged in as {username} ({st.session_state.user_role})")
+            st.rerun()
+        else:
+            st.sidebar.error("Invalid credentials")
     st.stop()
 else:
     st.sidebar.success(f"Logged in as {st.session_state.user_role}")
@@ -250,13 +248,25 @@ with tabs[1]:
         with col2:
             st.subheader(dp["name"])
             st.write(dp["description"])
-            st.markdown(f"<span style='color:red;'>${dp['price']}</span> <del>${dp['original_price']}</del>", unsafe_allow_html=True)
+
+            discount = 100 - int((dp["price"] / dp["original_price"]) * 100)
+            price_html = f"""
+                <div style='font-size:16px;'>
+                    <span style='color:red; font-weight:bold;'>${dp['price']}</span>
+                    <del style='color:gray;'>${dp['original_price']}</del>
+                    <span style='color:green; margin-left:10px;'>({discount}% OFF)</span>
+                </div>
+            """
+            st.markdown(price_html, unsafe_allow_html=True)
+
             qty = st.number_input("Qty", 0, 5, 0, key=f"deal_{dp['name']}")
         with col3:
-            if st.button("Add to Cart", key=f"btn_deal_{dp['name']}"):
+            if st.button("Add to Cart 🛒", key=f"btn_deal_{dp['name']}"):
                 if qty > 0:
                     add_to_cart(dp["name"], qty)
                     st.success(f"Added {qty} x {dp['name']}")
+                else:
+                    st.warning("Please select a quantity greater than 0.")
         st.markdown("---")
 
 # Cart Tab

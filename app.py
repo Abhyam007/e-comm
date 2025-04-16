@@ -29,27 +29,34 @@ users = {
 }
 
 # -----------------------------
-# Login System
+# Centered Login System
 # -----------------------------
 if not st.session_state.logged_in:
-    st.sidebar.header("Login")
-    username = st.sidebar.text_input("Username")
-    password = st.sidebar.text_input("Password", type="password")
-    if st.sidebar.button("Login"):
-        if username in users and users[username]["password"] == password:
-            st.session_state.logged_in = True
-            st.session_state.user_role = users[username]["role"]
-            st.sidebar.success(f"Logged in as {username} ({st.session_state.user_role})")
-            st.rerun()
-        else:
-            st.sidebar.error("Invalid credentials")
+    st.markdown("<h2 style='text-align:center;'>Login to Your Account</h2>", unsafe_allow_html=True)
+    st.markdown("###")
+
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        username = st.text_input("Username")
+        password = st.text_input("Password", type="password")
+        if st.button("Login"):
+            if username in users and users[username]["password"] == password:
+                st.session_state.logged_in = True
+                st.session_state.user_role = users[username]["role"]
+                st.success(f"Welcome {username}!")
+                st.experimental_rerun()
+            else:
+                st.error("Invalid credentials")
     st.stop()
-else:
-    st.sidebar.success(f"Logged in as {st.session_state.user_role}")
-    if st.sidebar.button("Logout"):
-        st.session_state.logged_in = False
-        st.session_state.user_role = None
-        st.experimental_rerun()
+
+# -----------------------------
+# Sidebar - Post Login
+# -----------------------------
+st.sidebar.success(f"Logged in as {st.session_state.user_role}")
+if st.sidebar.button("Logout"):
+    st.session_state.logged_in = False
+    st.session_state.user_role = None
+    st.experimental_rerun()
 
 # -----------------------------
 # Sample Product Data
@@ -58,35 +65,35 @@ products = [
     {
         "name": "Wireless Headphones",
         "price": 50,
-        "image": "assets/headphones.jpeg",  # Update to .jpeg
+        "image": "assets/headphones.jpeg",
         "description": "High-quality wireless headphones with noise cancellation.",
         "category": "Electronics"
     },
     {
         "name": "Smart Watch",
         "price": 120,
-        "image": "assets/smart_watch.jpeg",  # Update to .jpeg
+        "image": "assets/smart_watch.jpeg",
         "description": "Fitness tracking smart watch with long battery life.",
         "category": "Wearables"
     },
     {
         "name": "Laptop",
         "price": 800,
-        "image": "assets/laptop.jpeg",  # Update to .jpeg
+        "image": "assets/laptop.jpeg",
         "description": "Sleek laptop with powerful performance for work and play.",
         "category": "Computers"
     },
     {
         "name": "Bluetooth Speaker",
         "price": 40,
-        "image": "assets/speaker.jpeg",  # Update to .jpeg
+        "image": "assets/speaker.jpeg",
         "description": "Compact speaker with impressive sound quality.",
         "category": "Electronics"
     },
     {
         "name": "DSLR Camera",
         "price": 650,
-        "image": "assets/camera.jpeg",  # Update to .jpeg
+        "image": "assets/camera.jpeg",
         "description": "Professional DSLR camera for photography enthusiasts.",
         "category": "Electronics"
     }
@@ -97,14 +104,14 @@ deal_products = [
         "name": "Gaming Mouse",
         "price": 30,
         "original_price": 45,
-        "image": "assets/gaming.jpeg",  # Update to .jpeg
+        "image": "assets/gaming.jpeg",
         "description": "High DPI gaming mouse with colorful lighting.",
     },
     {
         "name": "Noise Cancelling Earbuds",
         "price": 25,
         "original_price": 50,
-        "image": "assets/buds.jpeg",  # Update to .jpeg
+        "image": "assets/buds.jpeg",
         "description": "In-ear buds with active noise cancelling technology.",
     }
 ]
@@ -177,7 +184,7 @@ def show_cart():
             with col1:
                 st.image(product["image"], width=80)
             with col2:
-                st.write(f"{name}")
+                st.write(f"**{name}**")
                 st.write(f"Quantity: {qty}")
                 st.write(f"Total: ${line_total}")
     st.write(f"### Grand Total: ${total}")
@@ -195,7 +202,7 @@ def admin_controls():
         desc = st.text_area("Description")
         price = st.number_input("Price", min_value=1, step=1)
         cat = st.selectbox("Category", ["Electronics", "Wearables", "Computers"])
-        img = st.text_input("Image Path (e.g., assets/your_image.jpeg)")  # Change to .jpeg
+        img = st.text_input("Image Path (e.g., assets/your_image.jpeg)")
         if st.button("Add Product"):
             new_prod = {
                 "name": name,
@@ -220,7 +227,7 @@ def admin_controls():
 # -----------------------------
 # Top Header and Logo
 # -----------------------------
-st.image("assets/logo.jpeg", width=800)  # Updated to .jpeg
+st.image("assets/logo.jpeg", width=800)
 st.markdown("<h1 style='text-align:center;'>Welcome to Our E-Commerce Store</h1>", unsafe_allow_html=True)
 st.markdown("<p style='text-align:center;'>Shop the best products at the best prices!</p>", unsafe_allow_html=True)
 st.markdown("---")
@@ -248,7 +255,11 @@ with tabs[1]:
         with col2:
             st.subheader(dp["name"])
             st.write(dp["description"])
-            st.markdown(f"<span style='color:red;'>${dp['price']}</span> <del>${dp['original_price']}</del>", unsafe_allow_html=True)
+            st.markdown(
+                f"<span style='color:red;font-weight:bold;'>${dp['price']}</span> "
+                f"<del>${dp['original_price']}</del>",
+                unsafe_allow_html=True
+            )
             qty = st.number_input("Qty", 0, 5, 0, key=f"deal_{dp['name']}")
         with col3:
             if st.button("Add to Cart", key=f"btn_deal_{dp['name']}"):

@@ -29,12 +29,11 @@ users = {
 }
 
 # -----------------------------
-# Centered Login System
+# Login System (Centered)
 # -----------------------------
 if not st.session_state.logged_in:
     st.markdown("<h2 style='text-align:center;'>Login to Your Account</h2>", unsafe_allow_html=True)
     st.markdown("###")
-
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         username = st.text_input("Username")
@@ -44,19 +43,16 @@ if not st.session_state.logged_in:
                 st.session_state.logged_in = True
                 st.session_state.user_role = users[username]["role"]
                 st.success(f"Welcome {username}!")
-                st.experimental_rerun()
+                st.rerun()
             else:
                 st.error("Invalid credentials")
     st.stop()
-
-# -----------------------------
-# Sidebar - Post Login
-# -----------------------------
-st.sidebar.success(f"Logged in as {st.session_state.user_role}")
-if st.sidebar.button("Logout"):
-    st.session_state.logged_in = False
-    st.session_state.user_role = None
-    st.experimental_rerun()
+else:
+    st.sidebar.success(f"Logged in as {st.session_state.user_role}")
+    if st.sidebar.button("Logout"):
+        st.session_state.logged_in = False
+        st.session_state.user_role = None
+        st.rerun()
 
 # -----------------------------
 # Sample Product Data
@@ -184,7 +180,7 @@ def show_cart():
             with col1:
                 st.image(product["image"], width=80)
             with col2:
-                st.write(f"**{name}**")
+                st.write(f"{name}")
                 st.write(f"Quantity: {qty}")
                 st.write(f"Total: ${line_total}")
     st.write(f"### Grand Total: ${total}")
@@ -256,7 +252,7 @@ with tabs[1]:
             st.subheader(dp["name"])
             st.write(dp["description"])
             st.markdown(
-                f"<span style='color:red;font-weight:bold;'>${dp['price']}</span> "
+                f"<span style='color:red; font-size:18px;'>${dp['price']}</span> "
                 f"<del>${dp['original_price']}</del>",
                 unsafe_allow_html=True
             )
